@@ -30,73 +30,75 @@
         {
             components = new System.ComponentModel.Container();
             bsClients = new BindingSource(components);
-            dgvClients = new DataGridView();
             bsCommandes = new BindingSource(components);
-            cbChoix = new ComboBox();
+            cbClients = new ComboBox();
             dgvCommandes = new DataGridView();
+            bsClients2 = new BindingSource(components);
+            tbFiltre = new TextBox();
             ((System.ComponentModel.ISupportInitialize)bsClients).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)dgvClients).BeginInit();
             ((System.ComponentModel.ISupportInitialize)bsCommandes).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgvCommandes).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)bsClients2).BeginInit();
             SuspendLayout();
             // 
-            // dgvClients
+            // cbClients
             // 
-            dgvClients.AllowUserToAddRows = false;
-            dgvClients.AllowUserToDeleteRows = false;
-            dgvClients.AllowUserToOrderColumns = true;
-            dgvClients.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvClients.Location = new Point(680, 186);
-            dgvClients.Name = "dgvClients";
-            dgvClients.ReadOnly = true;
-            dgvClients.RowHeadersWidth = 82;
-            dgvClients.Size = new Size(590, 676);
-            dgvClients.TabIndex = 0;
-            // 
-            // cbChoix
-            // 
-            cbChoix.FormattingEnabled = true;
-            cbChoix.Location = new Point(1028, 124);
-            cbChoix.Name = "cbChoix";
-            cbChoix.Size = new Size(242, 40);
-            cbChoix.TabIndex = 1;
-            cbChoix.SelectedIndexChanged += cbChoix_SelectedIndexChanged;
+            cbClients.DropDownStyle = ComboBoxStyle.DropDownList;
+            cbClients.FormattingEnabled = true;
+            cbClients.Location = new Point(387, 126);
+            cbClients.Name = "cbClients";
+            cbClients.Size = new Size(242, 40);
+            cbClients.TabIndex = 1;
             // 
             // dgvCommandes
             // 
             dgvCommandes.AllowUserToAddRows = false;
             dgvCommandes.AllowUserToDeleteRows = false;
             dgvCommandes.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvCommandes.Location = new Point(30, 186);
+            dgvCommandes.Location = new Point(387, 190);
             dgvCommandes.Name = "dgvCommandes";
             dgvCommandes.ReadOnly = true;
             dgvCommandes.RowHeadersWidth = 82;
-            dgvCommandes.Size = new Size(603, 676);
+            dgvCommandes.Size = new Size(883, 676);
             dgvCommandes.TabIndex = 2;
+            // 
+            // bsClients2
+            // 
+            bsClients2.CurrentChanged += bsClients2_CurrentChanged;
+            // 
+            // tbFiltre
+            // 
+            tbFiltre.Location = new Point(672, 126);
+            tbFiltre.Name = "tbFiltre";
+            tbFiltre.Size = new Size(200, 39);
+            tbFiltre.TabIndex = 3;
+            tbFiltre.TextChanged += tbFiltre_TextChanged;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1294, 888);
+            Controls.Add(tbFiltre);
             Controls.Add(dgvCommandes);
-            Controls.Add(cbChoix);
-            Controls.Add(dgvClients);
+            Controls.Add(cbClients);
             Name = "Form1";
             Text = "Form1";
             Load += Form1_Load;
             ((System.ComponentModel.ISupportInitialize)bsClients).EndInit();
-            ((System.ComponentModel.ISupportInitialize)dgvClients).EndInit();
             ((System.ComponentModel.ISupportInitialize)bsCommandes).EndInit();
             ((System.ComponentModel.ISupportInitialize)dgvCommandes).EndInit();
+            ((System.ComponentModel.ISupportInitialize)bsClients2).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
         private BindingSource bsClients;
-        private DataGridView dgvClients;
         private BindingSource bsCommandes;
-        private ComboBox cbChoix;
+        private ComboBox cbClients;
         private DataGridView dgvCommandes;
+        private BindingSource bsClients2;
+        private TextBox tbFiltre;
     }
 }
