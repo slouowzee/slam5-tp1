@@ -45,7 +45,7 @@
             // 
             cbClients.DropDownStyle = ComboBoxStyle.DropDownList;
             cbClients.FormattingEnabled = true;
-            cbClients.Location = new Point(387, 126);
+            cbClients.Location = new Point(31, 110);
             cbClients.Name = "cbClients";
             cbClients.Size = new Size(242, 40);
             cbClients.TabIndex = 1;
@@ -55,11 +55,11 @@
             dgvCommandes.AllowUserToAddRows = false;
             dgvCommandes.AllowUserToDeleteRows = false;
             dgvCommandes.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvCommandes.Location = new Point(387, 190);
+            dgvCommandes.Location = new Point(31, 190);
             dgvCommandes.Name = "dgvCommandes";
             dgvCommandes.ReadOnly = true;
             dgvCommandes.RowHeadersWidth = 82;
-            dgvCommandes.Size = new Size(883, 676);
+            dgvCommandes.Size = new Size(1239, 676);
             dgvCommandes.TabIndex = 2;
             // 
             // bsClients2
@@ -68,7 +68,7 @@
             // 
             // tbFiltre
             // 
-            tbFiltre.Location = new Point(672, 126);
+            tbFiltre.Location = new Point(316, 110);
             tbFiltre.Name = "tbFiltre";
             tbFiltre.Size = new Size(200, 39);
             tbFiltre.TabIndex = 3;

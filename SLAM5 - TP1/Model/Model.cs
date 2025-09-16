@@ -24,6 +24,14 @@ namespace SLAM5___TP1.Model
             idClient).Include(p => p.NumcliNavigation).ToList();
             return lesCommandes;
         }
+        public static List<Commande> listeCommandesParMontant(int montantMin)
+        {
+            List<Commande> lesCommandes = monModel.Commandes
+                .Where(p => p.Montantcde >= montantMin)
+                .Include(p => p.NumcliNavigation)
+                .ToList();
+            return lesCommandes;
+        }
         public static List<Commande> listeCommandesParClientEtParMontant(int idClient, int montantMin)
         {
             List<Commande> lesCommandes = monModel.Commandes
