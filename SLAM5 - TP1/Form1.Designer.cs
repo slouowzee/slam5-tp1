@@ -28,12 +28,75 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "Form1";
+            components = new System.ComponentModel.Container();
+            bsClients = new BindingSource(components);
+            dgvClients = new DataGridView();
+            bsCommandes = new BindingSource(components);
+            cbChoix = new ComboBox();
+            dgvCommandes = new DataGridView();
+            ((System.ComponentModel.ISupportInitialize)bsClients).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgvClients).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)bsCommandes).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgvCommandes).BeginInit();
+            SuspendLayout();
+            // 
+            // dgvClients
+            // 
+            dgvClients.AllowUserToAddRows = false;
+            dgvClients.AllowUserToDeleteRows = false;
+            dgvClients.AllowUserToOrderColumns = true;
+            dgvClients.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvClients.Location = new Point(680, 186);
+            dgvClients.Name = "dgvClients";
+            dgvClients.ReadOnly = true;
+            dgvClients.RowHeadersWidth = 82;
+            dgvClients.Size = new Size(590, 676);
+            dgvClients.TabIndex = 0;
+            // 
+            // cbChoix
+            // 
+            cbChoix.FormattingEnabled = true;
+            cbChoix.Location = new Point(1028, 124);
+            cbChoix.Name = "cbChoix";
+            cbChoix.Size = new Size(242, 40);
+            cbChoix.TabIndex = 1;
+            cbChoix.SelectedIndexChanged += cbChoix_SelectedIndexChanged;
+            // 
+            // dgvCommandes
+            // 
+            dgvCommandes.AllowUserToAddRows = false;
+            dgvCommandes.AllowUserToDeleteRows = false;
+            dgvCommandes.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvCommandes.Location = new Point(30, 186);
+            dgvCommandes.Name = "dgvCommandes";
+            dgvCommandes.ReadOnly = true;
+            dgvCommandes.RowHeadersWidth = 82;
+            dgvCommandes.Size = new Size(603, 676);
+            dgvCommandes.TabIndex = 2;
+            // 
+            // Form1
+            // 
+            AutoScaleDimensions = new SizeF(13F, 32F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(1294, 888);
+            Controls.Add(dgvCommandes);
+            Controls.Add(cbChoix);
+            Controls.Add(dgvClients);
+            Name = "Form1";
+            Text = "Form1";
+            Load += Form1_Load;
+            ((System.ComponentModel.ISupportInitialize)bsClients).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvClients).EndInit();
+            ((System.ComponentModel.ISupportInitialize)bsCommandes).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvCommandes).EndInit();
+            ResumeLayout(false);
         }
 
         #endregion
+        private BindingSource bsClients;
+        private DataGridView dgvClients;
+        private BindingSource bsCommandes;
+        private ComboBox cbChoix;
+        private DataGridView dgvCommandes;
     }
 }
