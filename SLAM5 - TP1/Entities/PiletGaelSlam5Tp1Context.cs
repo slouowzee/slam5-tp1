@@ -24,7 +24,10 @@ public partial class PiletGaelSlam5Tp1Context : DbContext
 
     public virtual DbSet<Partition> Partitions { get; set; }
 
+    public virtual DbSet<Style> Styles { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseMySql("server=192.168.10.16;port=3306;user=pilet_gael;password=x0Cypz9M;database=pilet_gael_slam5_tp1", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.4.1-mysql"));
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -64,6 +67,9 @@ public partial class PiletGaelSlam5Tp1Context : DbContext
             entity.Property(e => e.Prenomcli)
                 .HasMaxLength(128)
                 .HasColumnName("PRENOMCLI");
+            entity.Property(e => e.Telcli)
+                .HasMaxLength(255)
+                .HasColumnName("TELCLI");
         });
 
         modelBuilder.Entity<Commande>(entity =>
@@ -113,11 +119,19 @@ public partial class PiletGaelSlam5Tp1Context : DbContext
 
             entity.ToTable("partitions");
 
+            entity.HasIndex(e => e.Numstyle, "FK_STYLE");
+
             entity.Property(e => e.Numpart).HasColumnName("NUMPART");
             entity.Property(e => e.Libpart)
                 .HasMaxLength(128)
                 .HasColumnName("LIBPART");
+            entity.Property(e => e.Numstyle).HasColumnName("NUMSTYLE");
             entity.Property(e => e.Prixpart).HasColumnName("PRIXPART");
+
+            entity.HasOne(d => d.NumstyleNavigation).WithMany(p => p.Partitions)
+                .HasForeignKey(d => d.Numstyle)
+                .OnDelete(DeleteBehavior.SetNull)
+                .HasConstraintName("FK_STYLE");
 
             entity.HasMany(d => d.Numauts).WithMany(p => p.Numparts)
                 .UsingEntity<Dictionary<string, object>>(
@@ -140,6 +154,18 @@ public partial class PiletGaelSlam5Tp1Context : DbContext
                         j.IndexerProperty<int>("Numpart").HasColumnName("NUMPART");
                         j.IndexerProperty<int>("Numaut").HasColumnName("NUMAUT");
                     });
+        });
+
+        modelBuilder.Entity<Style>(entity =>
+        {
+            entity.HasKey(e => e.Numstyle).HasName("PRIMARY");
+
+            entity.ToTable("style");
+
+            entity.Property(e => e.Numstyle).HasColumnName("NUMSTYLE");
+            entity.Property(e => e.Libstyle)
+                .HasMaxLength(255)
+                .HasColumnName("LIBSTYLE");
         });
 
         OnModelCreatingPartial(modelBuilder);

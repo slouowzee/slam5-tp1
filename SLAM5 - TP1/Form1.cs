@@ -1,138 +1,253 @@
 namespace SLAM5___TP1
 {
-    public partial class Form1 : Form
-    {
-        public Form1()
-        {
-            InitializeComponent();
-        }
+	public partial class Form1 : Form
+	{
+		public DataGridView DgvCommandes => dgvCommandes;
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            bsClients.DataSource = Model.Model.listeClients();
-            bsCommandes.DataSource = Model.Model.listeCommandes().Select(x => new
-            {
-                x.Numcde,
-                x.Montantcde,
-                x.Datecde,
-                x.NumcliNavigation.Nomcli,
-                x.NumcliNavigation.Prenomcli
-            });
+		public Form1()
+		{
+			InitializeComponent();
+			cbTables.SelectedIndexChanged += cbTables_SelectedIndexChanged;
 
-            var clients = Model.Model.listeClients()
-                .Select(x => new
-                {
-                    x.Numcli,
-                    nomComplet = x.Nomcli + " " + x.Prenomcli
-                })
-                .ToList();
+			lblClients.Visible = false;
+			cbClients.Visible = false;
+			tbFiltre.Visible = false;
+			btnAdd.Visible = false;
+			btnMod.Visible = false;
+			btnSup.Visible = false;
+		}
 
-            clients.Insert(0, new { Numcli = 0, nomComplet = "" });
+		private void Form1_Load(object sender, EventArgs e)
+		{
+			ChargerTables();
+		}
 
-            bsClients2.DataSource = clients;
-            cbClients.ValueMember = "Numcli";
-            cbClients.DisplayMember = "nomComplet";
-            cbClients.DataSource = bsClients2;
-            cbClients.SelectedIndex = 0;
-            dgvCommandes.DataSource = bsCommandes;
-        }
+		public void ChargerTables()
+		{
+			cbTables.Items.Clear();
+			cbTables.Items.Add("Séléctionnez");
+			cbTables.Items.Add("Commandes");
+			cbTables.Items.Add("Partition");
+			cbTables.SelectedIndex = 0;
+		}
 
-        private void bsClients2_CurrentChanged(object sender, EventArgs e)
-        {
-            if (cbClients.SelectedIndex == 0 || cbClients.SelectedValue == null || Convert.ToInt32(cbClients.SelectedValue) == 0)
-            {
-                bsCommandes.DataSource = Model.Model.listeCommandes().Select(x => new
-                {
-                    x.Numcde,
-                    x.Montantcde,
-                    x.Datecde,
-                    x.NumcliNavigation.Nomcli,
-                    x.NumcliNavigation.Prenomcli
-                });
-            }
-            else
-            {
-                int IdClient = Convert.ToInt32(cbClients.SelectedValue);
-                bsCommandes.DataSource = Model.Model.listeCommandesParClient(IdClient).Select(x => new
-                {
-                    x.Numcde,
-                    x.Datecde,
-                    x.Montantcde,
-                    x.NumcliNavigation.Nomcli,
-                    x.NumcliNavigation.Prenomcli
-                })
-                .OrderBy(x => x.Datecde);
-            }
-            dgvCommandes.DataSource = bsCommandes;
-        }
+		public void ChargerCommandes()
+		{
+			bsClients.DataSource = Model.Model.listeClients();
+			bsCommandes.DataSource = Model.Model.listeCommandes().Select(x => new
+			{
+				x.Numcde,
+				x.Montantcde,
+				x.Datecde,
+				x.NumcliNavigation.Nomcli,
+				x.NumcliNavigation.Prenomcli
+			}).ToList();
 
-        private void tbFiltre_TextChanged(object sender, EventArgs e)
-        {
-            if (!string.IsNullOrWhiteSpace(tbFiltre.Text))
-            {
-                if (int.TryParse(tbFiltre.Text, out int montantMin))
-                {
-                    // Si aucun client sélectionné ou "tous", filtre sur tous les clients
-                    if (cbClients.SelectedIndex == 0 || cbClients.SelectedValue == null || Convert.ToInt32(cbClients.SelectedValue) == 0)
-                    {
-                        bsCommandes.DataSource = Model.Model.listeCommandesParMontant(montantMin).Select(x => new
-                        {
-                            x.Numcde,
-                            x.Datecde,
-                            x.Montantcde,
-                            x.NumcliNavigation.Nomcli,
-                            x.NumcliNavigation.Prenomcli
-                        }).OrderBy(x => x.Datecde).ToList();
-                    }
-                    else
-                    {
-                        int IdClient = Convert.ToInt32(cbClients.SelectedValue);
-                        bsCommandes.DataSource = Model.Model.listeCommandesParClientEtParMontant(IdClient, montantMin).Select(x => new
-                        {
-                            x.Numcde,
-                            x.Datecde,
-                            x.Montantcde,
-                            x.NumcliNavigation.Nomcli,
-                            x.NumcliNavigation.Prenomcli
-                        }).OrderBy(x => x.Datecde).ToList();
-                    }
-                    dgvCommandes.DataSource = bsCommandes;
-                }
-                else
-                {
-                    // Si la saisie n'est pas un nombre, on ne filtre pas
-                    bsCommandes.DataSource = null;
-                    dgvCommandes.DataSource = bsCommandes;
-                }
-            }
-            else
-            {
-                // Si le filtre est vide, on affiche selon le client sélectionné
-                if (cbClients.SelectedIndex == 0 || cbClients.SelectedValue == null || Convert.ToInt32(cbClients.SelectedValue) == 0)
-                {
-                    bsCommandes.DataSource = Model.Model.listeCommandes().Select(x => new
-                    {
-                        x.Numcde,
-                        x.Montantcde,
-                        x.Datecde,
-                        x.NumcliNavigation.Nomcli,
-                        x.NumcliNavigation.Prenomcli
-                    }).ToList();
-                }
-                else
-                {
-                    int IdClient = Convert.ToInt32(cbClients.SelectedValue);
-                    bsCommandes.DataSource = Model.Model.listeCommandesParClient(IdClient).Select(x => new
-                    {
-                        x.Numcde,
-                        x.Montantcde,
-                        x.Datecde,
-                        x.NumcliNavigation.Nomcli,
-                        x.NumcliNavigation.Prenomcli
-                    }).OrderBy(x => x.Datecde).ToList();
-                }
-                dgvCommandes.DataSource = bsCommandes;
-            }
-        }
-    }
+			var clients = Model.Model.listeClients()
+				.Select(x => new
+				{
+					x.Numcli,
+					nomComplet = x.Nomcli + " " + x.Prenomcli
+				})
+				.ToList();
+
+			clients.Insert(0, new { Numcli = 0, nomComplet = "" });
+
+			bsClients2.DataSource = clients;
+			cbClients.ValueMember = "Numcli";
+			cbClients.DisplayMember = "nomComplet";
+			cbClients.DataSource = bsClients2;
+			cbClients.SelectedIndex = 0;
+			dgvCommandes.DataSource = bsCommandes;
+
+			lblClients.Visible = true;
+			cbClients.Visible = true;
+			tbFiltre.Visible = true;
+			btnAdd.Visible = true;
+			btnMod.Visible = true;
+			btnSup.Visible = true;
+		}
+
+		public void ChargerPartitions()
+		{
+			lblClients.Visible = false;
+			cbClients.Visible = false;
+			tbFiltre.Visible = false;
+			btnAdd.Visible = false;
+			btnMod.Visible = false;
+			btnSup.Visible = false;
+
+			bsPartitions.DataSource = Model.Model.listePartitions().Select(x => new
+			{
+				x.Numpart,
+				x.Libpart,
+			}).ToList();
+			dgvCommandes.DataSource = bsPartitions;
+		}
+
+		private void cbTables_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (cbTables.SelectedItem == null || string.IsNullOrWhiteSpace(cbTables.SelectedItem.ToString()))
+			{
+				lblClients.Visible = false;
+				cbClients.Visible = false;
+				tbFiltre.Visible = false;
+				btnAdd.Visible = false;
+				btnMod.Visible = false;
+				btnSup.Visible = false;
+				dgvCommandes.DataSource = null;
+				return;
+			}
+
+			string table = cbTables.SelectedItem.ToString();
+			if (table == "Partition")
+			{
+				ChargerPartitions();
+			}
+			else if (table == "Commandes")
+			{
+				ChargerCommandes();
+			}
+			else
+			{
+				lblClients.Visible = false;
+				cbClients.Visible = false;
+				tbFiltre.Visible = false;
+				btnAdd.Visible = false;
+				btnMod.Visible = false;
+				btnSup.Visible = false;
+				dgvCommandes.DataSource = null;
+			}
+		}
+
+		private void bsClients2_CurrentChanged(object sender, EventArgs e)
+		{
+			if (cbTables.SelectedItem == null || cbTables.SelectedItem.ToString() != "Commandes")
+				return;
+
+			if (cbClients.SelectedIndex == 0 || cbClients.SelectedValue == null || Convert.ToInt32(cbClients.SelectedValue) == 0)
+			{
+				bsCommandes.DataSource = Model.Model.listeCommandes().Select(x => new
+				{
+					x.Numcde,
+					x.Montantcde,
+					x.Datecde,
+					x.NumcliNavigation.Nomcli,
+					x.NumcliNavigation.Prenomcli
+				}).ToList();
+			}
+			else
+			{
+				int IdClient = Convert.ToInt32(cbClients.SelectedValue);
+				bsCommandes.DataSource = Model.Model.listeCommandesParClient(IdClient).Select(x => new
+				{
+					x.Numcde,
+					x.Datecde,
+					x.Montantcde,
+					x.NumcliNavigation.Nomcli,
+					x.NumcliNavigation.Prenomcli
+				}).OrderBy(x => x.Datecde).ToList();
+			}
+			dgvCommandes.DataSource = bsCommandes;
+		}
+
+		private void tbFiltre_TextChanged(object sender, EventArgs e)
+		{
+			if (cbTables.SelectedItem == null || cbTables.SelectedItem.ToString() != "Commandes")
+				return;
+
+			if (!string.IsNullOrWhiteSpace(tbFiltre.Text))
+			{
+				if (int.TryParse(tbFiltre.Text, out int montantMin))
+				{
+					if (cbClients.SelectedIndex == 0 || cbClients.SelectedValue == null || Convert.ToInt32(cbClients.SelectedValue) == 0)
+					{
+						bsCommandes.DataSource = Model.Model.listeCommandesParMontant(montantMin).Select(x => new
+						{
+							x.Numcde,
+							x.Datecde,
+							x.Montantcde,
+							x.NumcliNavigation.Nomcli,
+							x.NumcliNavigation.Prenomcli
+						}).OrderBy(x => x.Datecde).ToList();
+					}
+					else
+					{
+						int IdClient = Convert.ToInt32(cbClients.SelectedValue);
+						bsCommandes.DataSource = Model.Model.listeCommandesParClientEtParMontant(IdClient, montantMin).Select(x => new
+						{
+							x.Numcde,
+							x.Datecde,
+							x.Montantcde,
+							x.NumcliNavigation.Nomcli,
+							x.NumcliNavigation.Prenomcli
+						}).OrderBy(x => x.Datecde).ToList();
+					}
+					dgvCommandes.DataSource = bsCommandes;
+				}
+				else
+				{
+					bsCommandes.DataSource = null;
+					dgvCommandes.DataSource = bsCommandes;
+				}
+			}
+			else
+			{
+				if (cbClients.SelectedIndex == 0 || cbClients.SelectedValue == null || Convert.ToInt32(cbClients.SelectedValue) == 0)
+				{
+					bsCommandes.DataSource = Model.Model.listeCommandes().Select(x => new
+					{
+						x.Numcde,
+						x.Montantcde,
+						x.Datecde,
+						x.NumcliNavigation.Nomcli,
+						x.NumcliNavigation.Prenomcli
+					}).ToList();
+				}
+				else
+				{
+					int IdClient = Convert.ToInt32(cbClients.SelectedValue);
+					bsCommandes.DataSource = Model.Model.listeCommandesParClient(IdClient).Select(x => new
+					{
+						x.Numcde,
+						x.Montantcde,
+						x.Datecde,
+						x.NumcliNavigation.Nomcli,
+						x.NumcliNavigation.Prenomcli
+					}).OrderBy(x => x.Datecde).ToList();
+				}
+				dgvCommandes.DataSource = bsCommandes;
+			}
+		}
+
+		private void btnAdd_Click(object sender, EventArgs e)
+		{
+			FormCommande formCommande = new FormCommande(this, 1, 0);
+			formCommande.Show();
+		}
+
+		private void btnMod_Click(object sender, EventArgs e)
+		{
+			System.Type type = bsCommandes.Current.GetType();
+			int idCommande = (int)type.GetProperty("Numcde").GetValue(bsCommandes.Current, null);
+
+			FormCommande formCommande = new FormCommande(this, 0, idCommande);
+			formCommande.Show();
+		}
+
+		private void btnSup_Click(object sender, EventArgs e)
+		{
+			System.Type type = bsCommandes.Current.GetType();
+			int idCommande = (int)type.GetProperty("Numcde").GetValue(bsCommandes.Current, null);
+			
+			if (MessageBox.Show("Voulez-vous vraiment supprimer la commande " + idCommande + " ?", "Suppression", MessageBoxButtons.OKCancel) == DialogResult.OK)
+			{
+				if (Model.Model.SupprimerCommande(idCommande))
+					MessageBox.Show("Commande supprimée");
+				else
+					MessageBox.Show("Erreur lors de la suppression de la commande");
+			}
+			ChargerCommandes();
+		}
+	}
 }
