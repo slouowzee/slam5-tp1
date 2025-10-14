@@ -32,13 +32,15 @@ namespace SLAM5___TP1.Model
             return monModel.Commandes
                 .Where(p => p.Numcli == idClient)
                 .Include(p => p.NumcliNavigation)
-                .ToList();
+                .Include(p => p.IdlivraisonNavigation)
+				.ToList();
 		}
         public static List<Commande> listeCommandesParMontant(int montantMin)
         {
             return monModel.Commandes
                 .Where(p => p.Montantcde >= montantMin)
                 .Include(p => p.NumcliNavigation)
+                .Include(p => p.IdlivraisonNavigation)
 				.ToList();
         }
         public static List<Commande> listeCommandesParClientEtParMontant(int idClient, int montantMin)
@@ -46,6 +48,7 @@ namespace SLAM5___TP1.Model
             return monModel.Commandes
                 .Where(p => p.Numcli == idClient && p.Montantcde >= montantMin)
                 .Include(p => p.NumcliNavigation)
+                .Include(p => p.IdlivraisonNavigation)
 				.ToList();
         }
 
@@ -54,7 +57,7 @@ namespace SLAM5___TP1.Model
             return monModel.Partitions.ToList();
         }
 
-        public static bool AjoutCommande(int montant, DateTime dateC, int idClient)
+        public static bool AjoutCommande(int montant, DateTime dateC, int idClient, int idLivraison)
         {
             Commande maCommande;
             bool vretour = true;
@@ -89,7 +92,7 @@ namespace SLAM5___TP1.Model
             return uneCommande;
         }
 
-        public static bool ModifierCommande(int idCde, int montant, DateTime dateC, int idClient)
+        public static bool ModifierCommande(int idCde, int montant, DateTime dateC, int idClient, int idLivraison)
         {
             try
             {
