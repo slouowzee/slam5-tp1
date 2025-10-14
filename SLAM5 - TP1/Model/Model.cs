@@ -126,5 +126,21 @@ namespace SLAM5___TP1.Model
             }
             return true;
 		}
+
+        public static bool SupprimerLivraison(int idLivraison)
+        {
+            try
+            {
+                Livraison l = monModel.Livraisons.First(x => x.Id == idLivraison);
+                monModel.Livraisons.Remove(l);
+                monModel.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show(ex.Message);
+                return false;
+            }
+            return true;
+		}
 	}
 }
