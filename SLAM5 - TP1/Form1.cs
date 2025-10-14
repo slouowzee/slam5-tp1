@@ -28,6 +28,7 @@ namespace SLAM5___TP1
 			cbTables.Items.Add("Séléctionnez");
 			cbTables.Items.Add("Commandes");
 			cbTables.Items.Add("Partition");
+			cbTables.Items.Add("Livraison");
 			cbTables.SelectedIndex = 0;
 		}
 
@@ -94,6 +95,23 @@ namespace SLAM5___TP1
 				x.Libpart,
 			}).ToList();
 			dgvCommandes.DataSource = bsPartitions;
+		}
+
+		public void ChargerLivraison()
+		{
+			lblClients.Visible = false;
+			cbClients.Visible = false;
+			tbFiltre.Visible = false;
+			btnAdd.Visible = false;
+			btnMod.Visible = false;
+			btnSup.Visible = true;
+
+			bsLivraison.DataSource = Model.Model.listeLivraison().Select(x => new
+			{
+				x.Id,
+				x.Lbl,
+			}).ToList();
+			dgvCommandes.DataSource = bsLivraison;
 		}
 
 		private void cbTables_SelectedIndexChanged(object sender, EventArgs e)
