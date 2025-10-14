@@ -16,11 +16,16 @@ namespace SLAM5___TP1.Model
         {
             return monModel.Clients.ToList();
         }
-        public static List<Commande> listeCommandes()
+        public static List<Livraison> listeLivraison()
         {
-            return monModel.Commandes.
-                Include(a => a.NumcliNavigation)
-                .ToList();
+            return monModel.Livraisons.ToList();
+		}
+		public static List<Commande> listeCommandes()
+        {
+            return monModel.Commandes
+                .Include(a => a.NumcliNavigation)
+                .Include(a => a.IdlivraisonNavigation)
+				.ToList();
 		}
 		public static List<Commande> listeCommandesParClient(int idClient)
         {

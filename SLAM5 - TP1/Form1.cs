@@ -34,13 +34,15 @@ namespace SLAM5___TP1
 		public void ChargerCommandes()
 		{
 			bsClients.DataSource = Model.Model.listeClients();
+			bsLivraison.DataSource = Model.Model.listeLivraison();
 			bsCommandes.DataSource = Model.Model.listeCommandes().Select(x => new
 			{
 				x.Numcde,
 				x.Montantcde,
 				x.Datecde,
+				x.IdlivraisonNavigation.Lbl,
 				x.NumcliNavigation.Nomcli,
-				x.NumcliNavigation.Prenomcli
+				x.NumcliNavigation.Prenomcli,
 			}).ToList();
 
 			var clients = Model.Model.listeClients()
@@ -53,7 +55,16 @@ namespace SLAM5___TP1
 
 			clients.Insert(0, new { Numcli = 0, nomComplet = "" });
 
+			var livraisons = Model.Model.listeLivraison()
+				.Select(x => new
+				{
+					x.Id,
+					x.Lbl
+				})
+				.ToList();
+
 			bsClients2.DataSource = clients;
+			bsLivraison.DataSource = livraisons;
 			cbClients.ValueMember = "Numcli";
 			cbClients.DisplayMember = "nomComplet";
 			cbClients.DataSource = bsClients2;
@@ -133,7 +144,8 @@ namespace SLAM5___TP1
 					x.Montantcde,
 					x.Datecde,
 					x.NumcliNavigation.Nomcli,
-					x.NumcliNavigation.Prenomcli
+					x.NumcliNavigation.Prenomcli,
+					x.IdlivraisonNavigation.Lbl
 				}).ToList();
 			}
 			else
@@ -201,7 +213,8 @@ namespace SLAM5___TP1
 						x.Montantcde,
 						x.Datecde,
 						x.NumcliNavigation.Nomcli,
-						x.NumcliNavigation.Prenomcli
+						x.NumcliNavigation.Prenomcli,
+						x.IdlivraisonNavigation.Lbl
 					}).ToList();
 				}
 				else

@@ -41,11 +41,13 @@
 			btnAdd = new Button();
 			btnMod = new Button();
 			btnSup = new Button();
+			bsLivraison = new BindingSource(components);
 			((System.ComponentModel.ISupportInitialize)bsClients).BeginInit();
 			((System.ComponentModel.ISupportInitialize)bsCommandes).BeginInit();
 			((System.ComponentModel.ISupportInitialize)dgvCommandes).BeginInit();
 			((System.ComponentModel.ISupportInitialize)bsClients2).BeginInit();
 			((System.ComponentModel.ISupportInitialize)bsPartitions).BeginInit();
+			((System.ComponentModel.ISupportInitialize)bsLivraison).BeginInit();
 			SuspendLayout();
 			// 
 			// cbClients
@@ -150,6 +152,7 @@
 			((System.ComponentModel.ISupportInitialize)dgvCommandes).EndInit();
 			((System.ComponentModel.ISupportInitialize)bsClients2).EndInit();
 			((System.ComponentModel.ISupportInitialize)bsPartitions).EndInit();
+			((System.ComponentModel.ISupportInitialize)bsLivraison).EndInit();
 			ResumeLayout(false);
 			PerformLayout();
 		}
@@ -167,5 +170,6 @@
         private Button btnAdd;
         private Button btnMod;
 		private Button btnSup;
+		private BindingSource bsLivraison;
 	}
 }
