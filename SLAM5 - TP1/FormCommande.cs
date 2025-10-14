@@ -18,7 +18,7 @@
         {
             if (_ajout == 1 && _idCommande == 0)
             {
-                if (Model.Model.AjoutCommande(Convert.ToInt32(tbCommande.Text), dtpCommande.Value, Convert.ToInt32(cbCommandeForm.SelectedValue)))
+                if (Model.Model.AjoutCommande(Convert.ToInt32(tbCommande.Text), dtpCommande.Value, Convert.ToInt32(cbCommandeForm.SelectedValue), Convert.ToInt32(cbLivraison.SelectedValue)))
                     MessageBox.Show("Commande ajoutée");
                 else
                     MessageBox.Show("Erreur lors de l'ajout de la commande");
@@ -27,7 +27,7 @@
 			}
             else if (_ajout == 0 && _idCommande != 0)
             {
-                if (Model.Model.ModifierCommande(_idCommande, Convert.ToInt32(tbCommande.Text), dtpCommande.Value, Convert.ToInt32(cbCommandeForm.SelectedValue)))
+                if (Model.Model.ModifierCommande(_idCommande, Convert.ToInt32(tbCommande.Text), dtpCommande.Value, Convert.ToInt32(cbCommandeForm.SelectedValue), Convert.ToInt32(cbLivraison.SelectedValue)))
                     MessageBox.Show("Commande modifiée");
                 else
                     MessageBox.Show("Erreur lors de la modification de la commande");
@@ -49,7 +49,14 @@
                     nomComplet = x.Nomcli + " " + x.Prenomcli
                 })
             .ToList();
-            if (_ajout == 0 && _idCommande != 0)
+            var livraisons = Model.Model.listeLivraison()
+                .Select(x => new
+                {
+                    x.Id,
+                    x.Lbl
+                });
+
+			if (_ajout == 0 && _idCommande != 0)
             {
                 btnOK.Text = "Modifier";
                 var commande = Model.Model.listeCommandes().FirstOrDefault(c => c.Numcde == _idCommande);
@@ -63,6 +70,10 @@
                 cbCommandeForm.DisplayMember = "nomComplet";
                 cbCommandeForm.DataSource = clients;
                 cbCommandeForm.SelectedValue = commande.Numcli;
+                cbLivraison.ValueMember = "Id";
+                cbLivraison.DisplayMember = "Lbl";
+                cbLivraison.DataSource = livraisons.ToList();
+                cbLivraison.SelectedValue = commande.Idlivraison;
 			}
             else
             {
@@ -71,7 +82,11 @@
                 cbCommandeForm.DisplayMember = "nomComplet";
                 cbCommandeForm.DataSource = clients;
                 cbCommandeForm.SelectedIndex = 0;
-            }
+                cbLivraison.ValueMember = "Id";
+                cbLivraison.DisplayMember = "Lbl";
+                cbLivraison.DataSource = livraisons.ToList();
+                cbLivraison.SelectedIndex = -1;
+			}
 		}
     }
 }

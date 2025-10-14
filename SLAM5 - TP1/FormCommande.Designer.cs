@@ -33,6 +33,8 @@
 			dtpCommande = new DateTimePicker();
 			cbCommandeForm = new ComboBox();
 			btnOK = new Button();
+			cbLivraison = new ComboBox();
+			SuspendLayout();
 			// 
 			// tbCommande
 			// 
@@ -68,7 +70,7 @@
 			// 
 			// btnOK
 			// 
-			btnOK.Location = new Point(147, 274);
+			btnOK.Location = new Point(145, 304);
 			btnOK.Name = "btnOK";
 			btnOK.Size = new Size(150, 46);
 			btnOK.TabIndex = 4;
@@ -76,11 +78,20 @@
 			btnOK.UseVisualStyleBackColor = true;
 			btnOK.Click += btnOK_Click;
 			// 
+			// cbLivraison
+			// 
+			cbLivraison.FormattingEnabled = true;
+			cbLivraison.Location = new Point(67, 238);
+			cbLivraison.Name = "cbLivraison";
+			cbLivraison.Size = new Size(330, 40);
+			cbLivraison.TabIndex = 5;
+			// 
 			// FormCommande
 			// 
 			AutoScaleDimensions = new SizeF(13F, 32F);
 			AutoScaleMode = AutoScaleMode.Font;
 			ClientSize = new Size(456, 376);
+			Controls.Add(cbLivraison);
 			Controls.Add(btnOK);
 			Controls.Add(cbCommandeForm);
 			Controls.Add(dtpCommande);
@@ -89,11 +100,6 @@
 			Name = "FormCommande";
 			Text = "FormCommande";
 			Load += FormCommande_Load;
-			Controls.SetChildIndex(tbCommande, 0);
-			Controls.SetChildIndex(lblMontant, 0);
-			Controls.SetChildIndex(dtpCommande, 0);
-			Controls.SetChildIndex(cbCommandeForm, 0);
-			Controls.SetChildIndex(btnOK, 0);
 			ResumeLayout(false);
 			PerformLayout();
 		}
@@ -105,5 +111,6 @@
         private DateTimePicker dtpCommande;
         private ComboBox cbCommandeForm;
         private Button btnOK;
-    }
+		private ComboBox cbLivraison;
+	}
 }
