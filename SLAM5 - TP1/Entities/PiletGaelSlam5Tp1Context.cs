@@ -22,6 +22,8 @@ public partial class PiletGaelSlam5Tp1Context : DbContext
 
     public virtual DbSet<Commande> Commandes { get; set; }
 
+    public virtual DbSet<Livraison> Livraisons { get; set; }
+
     public virtual DbSet<Partition> Partitions { get; set; }
 
     public virtual DbSet<Style> Styles { get; set; }
@@ -78,12 +80,20 @@ public partial class PiletGaelSlam5Tp1Context : DbContext
 
             entity.ToTable("commande");
 
+            entity.HasIndex(e => e.Idlivraison, "FK_LIVRAISON");
+
             entity.HasIndex(e => e.Numcli, "I_FK_COMMANDE_ADHERENT");
 
             entity.Property(e => e.Numcde).HasColumnName("NUMCDE");
             entity.Property(e => e.Datecde).HasColumnName("DATECDE");
+            entity.Property(e => e.Idlivraison).HasColumnName("idlivraison");
             entity.Property(e => e.Montantcde).HasColumnName("MONTANTCDE");
             entity.Property(e => e.Numcli).HasColumnName("NUMCLI");
+
+            entity.HasOne(d => d.IdlivraisonNavigation).WithMany(p => p.Commandes)
+                .HasForeignKey(d => d.Idlivraison)
+                .OnDelete(DeleteBehavior.SetNull)
+                .HasConstraintName("FK_LIVRAISON");
 
             entity.HasOne(d => d.NumcliNavigation).WithMany(p => p.Commandes)
                 .HasForeignKey(d => d.Numcli)
@@ -111,6 +121,18 @@ public partial class PiletGaelSlam5Tp1Context : DbContext
                         j.IndexerProperty<int>("Numcde").HasColumnName("NUMCDE");
                         j.IndexerProperty<int>("Numpart").HasColumnName("NUMPART");
                     });
+        });
+
+        modelBuilder.Entity<Livraison>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+            entity.ToTable("livraison");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Lbl)
+                .HasMaxLength(255)
+                .HasColumnName("lbl");
         });
 
         modelBuilder.Entity<Partition>(entity =>
