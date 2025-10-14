@@ -70,6 +70,9 @@ namespace SLAM5___TP1
 			cbClients.DisplayMember = "nomComplet";
 			cbClients.DataSource = bsClients2;
 			cbClients.SelectedIndex = 0;
+			cbLivraisonForm.ValueMember = "Id";
+			cbLivraisonForm.DisplayMember = "Lbl";
+			cbLivraisonForm.DataSource = bsLivraison;
 			dgvCommandes.DataSource = bsCommandes;
 
 			lblClients.Visible = true;

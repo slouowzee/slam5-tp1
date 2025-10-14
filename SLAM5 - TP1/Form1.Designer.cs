@@ -42,6 +42,7 @@
 			btnMod = new Button();
 			btnSup = new Button();
 			bsLivraison = new BindingSource(components);
+			cbLivraisonForm = new ComboBox();
 			((System.ComponentModel.ISupportInitialize)bsClients).BeginInit();
 			((System.ComponentModel.ISupportInitialize)bsCommandes).BeginInit();
 			((System.ComponentModel.ISupportInitialize)dgvCommandes).BeginInit();
@@ -131,11 +132,20 @@
 			btnSup.UseVisualStyleBackColor = true;
 			btnSup.Click += btnSup_Click;
 			// 
+			// cbLivraisonForm
+			// 
+			cbLivraisonForm.FormattingEnabled = true;
+			cbLivraisonForm.Location = new Point(1023, 646);
+			cbLivraisonForm.Name = "cbLivraisonForm";
+			cbLivraisonForm.Size = new Size(242, 40);
+			cbLivraisonForm.TabIndex = 9;
+			// 
 			// Form1
 			// 
 			AutoScaleDimensions = new SizeF(13F, 32F);
 			AutoScaleMode = AutoScaleMode.Font;
 			ClientSize = new Size(1294, 888);
+			Controls.Add(cbLivraisonForm);
 			Controls.Add(btnSup);
 			Controls.Add(btnMod);
 			Controls.Add(btnAdd);
@@ -171,5 +181,6 @@
         private Button btnMod;
 		private Button btnSup;
 		private BindingSource bsLivraison;
+		private ComboBox cbLivraisonForm;
 	}
 }
