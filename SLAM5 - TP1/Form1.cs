@@ -137,6 +137,10 @@ namespace SLAM5___TP1
 			{
 				ChargerCommandes();
 			}
+			else if (table == "Livraison")
+			{
+				ChargerLivraison();
+			}
 			else
 			{
 				lblClients.Visible = false;
